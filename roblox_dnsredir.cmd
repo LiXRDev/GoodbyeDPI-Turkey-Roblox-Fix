@@ -8,4 +8,4 @@ PUSHD "%_arch%"
 start "" goodbyedpi.exe -5 --set-ttl 5 --dns-addr 9.9.9.9 --dns-port 9953 --dnsv6-addr 2620:fe::fe --dnsv6-port 1253
 
 POPD
-POPD
+POP
