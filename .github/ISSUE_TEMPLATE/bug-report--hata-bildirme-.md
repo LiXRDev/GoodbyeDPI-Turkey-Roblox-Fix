@@ -1,5 +1,5 @@
 ---
-name: Bug Report
+name: Bug Report (Hata Bildirme)
 about: Create a report to help us improve/Geliştirmemize Yardım Edin
 title: "[BUG]"
 labels: bug
