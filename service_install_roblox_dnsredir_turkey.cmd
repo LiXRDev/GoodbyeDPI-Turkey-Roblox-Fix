@@ -12,7 +12,7 @@ echo Bu metodu kullaniyorsaniz ayrica Windows ayarlarindan DNS degistirmenize ge
 pause
 sc stop "GoodbyeDPI"
 sc delete "GoodbyeDPI"
-sc create "GoodbyeDPI" binPath= "\"%CD%\%_arch%\goodbyedpi.exe\" -9 --set-ttl 5 --dns-addr 9.9.9.9 --dns-port 9953 --dnsv6-addr 2620:fe::fe --dnsv6-port 9953" start= "auto"
+sc create "GoodbyeDPI" binPath= "\"%CD%\%_arch%\goodbyedpi.exe\" -5 --set-ttl 5 --dns-addr 9.9.9.9 --dns-port 9953 --dnsv6-addr 2620:fe::fe --dnsv6-port 9953" start= "auto"
 sc description "GoodbyeDPIRX" "Turkiye icin DNS zorlamasini kaldirir."
 sc start "GoodbyeDPI"
 
