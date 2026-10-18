@@ -1,6 +1,6 @@
 @ECHO OFF
 echo Hizmeti kaldirmak icin:
-echo Bu batch dosyasini yonetici olarak calistirmaniz gerekmektedir.
+echo Bu Batch dosyasini yonetici olarak calistirmaniz gerekmektedir.
 echo Sag Tik - Yonetici Olarak Calistir.
 echo Eger yonetici olarak calistirdiysaniz herhangi bir tusa basin.
 pause
