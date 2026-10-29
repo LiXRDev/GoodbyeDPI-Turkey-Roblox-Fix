@@ -2,7 +2,7 @@ $ErrorActionPreference = 'SilentlyContinue'
 try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 } catch {}
 
 # ---- HER YENI SURUMDE SADECE BU SATIRI GUNCELLE ----
-$ToolVersion = '1.2.0'
+$ToolVersion = '1.2.1'
 # ----------------------------------------------------
 
 $OutFile = Join-Path $PSScriptRoot 'rapor.txt'
@@ -71,24 +71,29 @@ if (Ask-Consent '2/5 Antivirus' 'Yuklu antivirus urunlerinin adi ve su an acik m
     Add-Line '--- Antivirus ---'
     $av = Get-CimInstance -Namespace 'root/SecurityCenter2' -ClassName AntiVirusProduct
     if ($av) {
-        $eskiGibi = $false
+        $kapaliVar = $false
         foreach ($p in $av) {
-            $hex = ([Convert]::ToString([int]$p.productState, 16)).PadLeft(6, '0')
-            $st = $hex.Substring(2, 2)
-            $sig = $hex.Substring(4, 2)
-            switch ($st) {
-                '10' { $durum = 'AKTIF - su an kullanilan' }
-                '11' { $durum = 'Beklemede (pasif)'; $eskiGibi = $true }
-                '01' { $durum = 'Suresi dolmus'; $eskiGibi = $true }
-                default { $durum = 'KAPALI - kullanilmiyor'; $eskiGibi = $true }
+            # productState bitleri: 0x1000 = koruma acik, 0x10 = imzalar eski
+            $state = [int]$p.productState
+            $acik = (($state -band 0x1000) -ne 0)
+            $imzaEski = (($state -band 0x10) -ne 0)
+            # Program dosyasi diskte yoksa Windows'taki kayit eski bir kalintidir, "acik" gorunse bile kullanilmiyordur
+            $yol = [string]$p.pathToSignedProductExe
+            $dosyaYok = (($yol -match '^[A-Za-z]:\\') -and (-not (Test-Path -LiteralPath $yol)))
+            if ($dosyaYok) {
+                $kapaliVar = $true
+                $durum = 'KALINTI - program dosyasi bulunamadi, kaldirilmis olabilir, kullanilmiyor'
+            } elseif ($acik) {
+                $durum = 'AKTIF - su an kullanilan'
+                if ($imzaEski) { $durum = $durum + ', imzalar eski olabilir' } else { $durum = $durum + ', imzalar guncel' }
+            } else {
+                $kapaliVar = $true
+                $durum = 'KAPALI - kullanilmiyor'
             }
-            if ($st -eq '10') {
-                if ($sig -eq '00') { $durum = $durum + ', imzalar guncel' } else { $durum = $durum + ', imzalar eski olabilir' }
-            }
-            Add-Line ($p.displayName + ' : ' + $durum)
+            Add-Line ($p.displayName + ' : ' + $durum + ' [kod: ' + $state + ']')
         }
-        if ($eskiGibi) {
-            Add-Line 'Not: KAPALI veya Beklemede gorunen urunler eskiden kaldirilmis programlarin kalintisi olabilir.'
+        if ($kapaliVar) {
+            Add-Line 'Not: KALINTI veya KAPALI gorunen urunler eskiden kaldirilmis programlarin kalintisi olabilir.'
         }
     } else { Add-Line 'Bilgi alinamadi' }
     Add-Line ''
