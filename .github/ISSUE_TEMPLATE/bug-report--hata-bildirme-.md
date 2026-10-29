@@ -35,5 +35,5 @@ Kullandığınız DNS veya çalıştırdığınız dosya hangisi?
 **Ekran Görüntüleri**
 Varsa karşılaştığınız hatanın veya konsol (CMD) ekranının görüntüsünü buraya sürükleyip bırakın.
 
-**Ek Bilgiler**
-Sorunla ilgili belirtmek istediğiniz ek bir detay varsa buraya yazabilirsiniz.
+**Ek Bilgiler ve DNSTEST.bat Dosyasındaki Rapor Bilgileri**
+Sorunla ilgili belirtmek istediğiniz ek bir detay varsa buraya yazabilirsiniz. Sizden ricam DNSTEST.bat dosyası üzerinden rapor oluşturup buraya yapıştırmanız.
