@@ -3,7 +3,10 @@ chcp 65001 >nul
 title GoodbyeDPI - Roblox Multi-Language Tool
 color 0A
 
-set "LOCAL_VER=1.2.0"
+rem ====================================================================
+rem  HER YENI SURUMDE SADECE BU SATIRI GUNCELLE / UPDATE ONLY THIS LINE
+rem ====================================================================
+set "LOCAL_VER=1.2.1"
 set "REPO=LiXRDev/GoodbyeDPI-Turkey-Roblox-Fix"
 rem ====================================================================
 
