@@ -6,7 +6,7 @@ color 0A
 rem ====================================================================
 rem  HER YENI SURUMDE SADECE BU SATIRI GUNCELLE / UPDATE ONLY THIS LINE
 rem ====================================================================
-set "LOCAL_VER=1.2.1"
+set "LOCAL_VER=1.2.2"
 set "REPO=LiXRDev/GoodbyeDPI-Turkey-Roblox-Fix"
 rem ====================================================================
 
@@ -23,6 +23,7 @@ exit /b
 
 :ADMIN_OK
 cd /d "%~dp0"
+mode con: cols=100 lines=40 >nul 2>&1
 set "BASE=%~dp0"
 setlocal enabledelayedexpansion
 
@@ -40,23 +41,27 @@ if errorlevel 2 goto SET_EN
 goto SET_TR
 
 :SET_TR
-set "UPD_KEYS=EH"
+set "YN_KEYS=EH"
 set "TXT_TITLE=ROBLOX GOODBYEDPI - AKILLI ALTERNATIF VE YONETIM V%LOCAL_VER%"
-set "TXT_TESTING=Sunuculara baglanti testi ve guncelleme kontrolu yapiliyor, lutfen bekleyin..."
+set "TXT_TESTING=Baglanti ve guncelleme kontrol ediliyor, lutfen bekleyin..."
 set "TXT_RESULTS=PING TEST SONUCLARI VE MENU - v%LOCAL_VER%"
 set "TXT_UNREACH=Erisilemedi"
-set "TXT_NO_DNS=[X] Hicbir DNS sunucusuna erisilemedi. Internet baglantinizi kontrol edin."
-set "TXT_OPT_BEST=En iyi DNS'i ac ve testi kapat"
-set "TXT_OPT_GOOG=Google DNS'i ac (roblox_dnsredir_alternative.cmd) ve testi kapat"
-set "TXT_OPT_CF=Cloudflare DNS'i ac (roblox_dnsredir_alternative2.cmd) ve testi kapat"
-set "TXT_OPT_ADG=AdGuard DNS'i ac (roblox_dnsredir_alternative_adguard.cmd) ve testi kapat"
-set "TXT_OPT_Q9=Quad9 DNS'i ac (roblox_dnsredir.cmd) ve testi kapat"
+set "TXT_NO_DNS=[X] Hicbir DNS sunucusuna erisilemedi. Internetinizi kontrol edin."
+set "TXT_OPT_SMART=Akilli Secici: en hizli calisan profili bul (2-3 dk)"
+set "TXT_OPT_ROBLOX=Roblox ile baslat (Roblox kapaninca otomatik kapanir)"
+set "TXT_OPT_SAVED=Son kullanilan profili baslat"
+set "TXT_NONE_YET=henuz yok"
+set "TXT_OPT_GOOG=Google DNS'i ac (roblox_dnsredir_alternative.cmd)"
+set "TXT_OPT_CF=Cloudflare DNS'i ac (roblox_dnsredir_alternative2.cmd)"
+set "TXT_OPT_ADG=AdGuard DNS'i ac (roblox_dnsredir_alternative_adguard.cmd)"
+set "TXT_OPT_Q9=Quad9 DNS'i ac (roblox_dnsredir.cmd)"
 set "TXT_OPT_CLEAN=Roblox Onbellegini (Temp) Temizle"
 set "TXT_OPT_UPDATE=Guncellemeleri Kontrol Et"
 set "TXT_OPT_REPORT=Sorun Raporu Olustur (sorun_raporu.ps1)"
 set "TXT_OPT_EXIT=Testi kapat"
-set "TXT_SELECT=Seciminizi yapin (1-9): "
-set "TXT_STARTING=Baslatiliyor:"
+set "TXT_SELECT=Seciminizi yapin (1-9, A, B): "
+set "TXT_START_NOW=Secilen profil simdi baslatilsin mi?"
+set "TXT_NO_SAVED=[i] Kayitli profil yok. Once Akilli Secici'yi (1) calistirin."
 set "TXT_CLEANING=Roblox gecici dosyalari temizleniyor..."
 set "TXT_CLEAN_SUCCESS=[v] Roblox onbellegi basariyla temizlendi."
 set "TXT_CLEAN_FAIL=[x] Temizlenemedi. Roblox acik olabilir, kapatip tekrar deneyin."
@@ -67,28 +72,32 @@ set "TXT_UPD_CHECKING=Guncellemeler kontrol ediliyor..."
 set "TXT_UPD_NEW=[*] Yeni surum mevcut:"
 set "TXT_UPD_YOURS=Sizdeki:"
 set "TXT_UPD_OK=[v] Guncelsiniz. En son surum:"
-set "TXT_UPD_ERR=[i] Kontrol yapilamadi. Internet baglantinizi kontrol edin veya daha sonra tekrar deneyin."
+set "TXT_UPD_ERR=[i] Kontrol yapilamadi. Internet baglantinizi kontrol edin."
 set "TXT_UPD_OPEN=Indirme sayfasi acilsin mi?"
 goto START_TEST
 
 :SET_EN
-set "UPD_KEYS=YN"
+set "YN_KEYS=YN"
 set "TXT_TITLE=ROBLOX GOODBYEDPI - SMART ALTERNATIVE and MANAGEMENT V%LOCAL_VER%"
-set "TXT_TESTING=Testing connection to servers and checking for updates, please wait..."
+set "TXT_TESTING=Checking connection and updates, please wait..."
 set "TXT_RESULTS=PING TEST RESULTS AND MENU - v%LOCAL_VER%"
 set "TXT_UNREACH=Unreachable"
-set "TXT_NO_DNS=[X] No DNS server is reachable. Please check your internet connection."
-set "TXT_OPT_BEST=Launch best DNS and exit"
-set "TXT_OPT_GOOG=Launch Google DNS (roblox_dnsredir_alternative.cmd) and exit"
-set "TXT_OPT_CF=Launch Cloudflare DNS (roblox_dnsredir_alternative2.cmd) and exit"
-set "TXT_OPT_ADG=Launch AdGuard DNS (roblox_dnsredir_alternative_adguard.cmd) and exit"
-set "TXT_OPT_Q9=Launch Quad9 DNS (roblox_dnsredir.cmd) and exit"
+set "TXT_NO_DNS=[X] No DNS server is reachable. Check your internet connection."
+set "TXT_OPT_SMART=Smart Picker: find the fastest working profile (2-3 min, Turkish)"
+set "TXT_OPT_ROBLOX=Start with Roblox (stops when Roblox closes, Turkish)"
+set "TXT_OPT_SAVED=Launch last used profile"
+set "TXT_NONE_YET=none yet"
+set "TXT_OPT_GOOG=Launch Google DNS (roblox_dnsredir_alternative.cmd)"
+set "TXT_OPT_CF=Launch Cloudflare DNS (roblox_dnsredir_alternative2.cmd)"
+set "TXT_OPT_ADG=Launch AdGuard DNS (roblox_dnsredir_alternative_adguard.cmd)"
+set "TXT_OPT_Q9=Launch Quad9 DNS (roblox_dnsredir.cmd)"
 set "TXT_OPT_CLEAN=Clear Roblox Cache (Temp)"
 set "TXT_OPT_UPDATE=Check for Updates"
-set "TXT_OPT_REPORT=Create Problem Report (sorun_raporu.ps1, Turkish only)"
+set "TXT_OPT_REPORT=Create Problem Report (sorun_raporu.ps1, Turkish)"
 set "TXT_OPT_EXIT=Exit"
-set "TXT_SELECT=Make your choice (1-9): "
-set "TXT_STARTING=Launching:"
+set "TXT_SELECT=Make your choice (1-9, A, B): "
+set "TXT_START_NOW=Launch the selected profile now?"
+set "TXT_NO_SAVED=[i] No saved profile yet. Run the Smart Picker (1) first."
 set "TXT_CLEANING=Clearing Roblox temporary files..."
 set "TXT_CLEAN_SUCCESS=[v] Roblox cache successfully cleared."
 set "TXT_CLEAN_FAIL=[x] Could not clear it. Roblox may be open, close it and try again."
@@ -99,7 +108,7 @@ set "TXT_UPD_CHECKING=Checking for updates..."
 set "TXT_UPD_NEW=[*] New version available:"
 set "TXT_UPD_YOURS=Yours:"
 set "TXT_UPD_OK=[v] You are up to date. Latest version:"
-set "TXT_UPD_ERR=[i] Could not check for updates. Check your internet connection or try again later."
+set "TXT_UPD_ERR=[i] Could not check for updates. Check your internet connection."
 set "TXT_UPD_OPEN=Open the download page?"
 goto START_TEST
 
@@ -117,30 +126,10 @@ call :PING_DNS 1.1.1.1 ms_cloudflare p_cloudflare
 call :PING_DNS 94.140.14.14 ms_adguard p_adguard
 call :PING_DNS 9.9.9.9 ms_quad9 p_quad9
 call :CHECK_UPDATE
-
-rem --- En iyi DNS'i hesapla / Pick the best DNS ---
-set /a min_ms=ms_google
-set "best_script=roblox_dnsredir_alternative.cmd"
-set "best_name=Google DNS"
-
-if !ms_cloudflare! LSS !min_ms! (
-    set /a min_ms=ms_cloudflare
-    set "best_script=roblox_dnsredir_alternative2.cmd"
-    set "best_name=Cloudflare DNS"
-)
-if !ms_adguard! LSS !min_ms! (
-    set /a min_ms=ms_adguard
-    set "best_script=roblox_dnsredir_alternative_adguard.cmd"
-    set "best_name=AdGuard DNS"
-)
-if !ms_quad9! LSS !min_ms! (
-    set /a min_ms=ms_quad9
-    set "best_script=roblox_dnsredir.cmd"
-    set "best_name=Quad9 DNS"
-)
+call :LOAD_PROFILE
 
 set "NO_DNS=0"
-if !min_ms! EQU 9999 set "NO_DNS=1"
+if !ms_google! EQU 9999 if !ms_cloudflare! EQU 9999 if !ms_adguard! EQU 9999 if !ms_quad9! EQU 9999 set "NO_DNS=1"
 
 :MENU
 cls
@@ -156,49 +145,90 @@ echo.
 if "!UPD_STATE!"=="NEW" echo  !TXT_UPD_NEW! v!UPD_LATEST!  -  !TXT_UPD_YOURS! v%LOCAL_VER%
 if "!NO_DNS!"=="1" echo  !TXT_NO_DNS!
 echo --------------------------------------------------------------------
-echo  [1] !TXT_OPT_BEST! [!best_name!]
-echo  [2] !TXT_OPT_GOOG!
-echo  [3] !TXT_OPT_CF!
-echo  [4] !TXT_OPT_ADG!
-echo  [5] !TXT_OPT_Q9!
-echo  [6] !TXT_OPT_CLEAN!
-echo  [7] !TXT_OPT_UPDATE!
-echo  [8] !TXT_OPT_REPORT!
-echo  [9] !TXT_OPT_EXIT!
+echo  [1] !TXT_OPT_SMART!
+echo  [2] !TXT_OPT_ROBLOX!
+if defined SAVED_NAME echo  [3] !TXT_OPT_SAVED! : !SAVED_NAME!
+if not defined SAVED_NAME echo  [3] !TXT_OPT_SAVED! : !TXT_NONE_YET!
+echo  [4] !TXT_OPT_GOOG!
+echo  [5] !TXT_OPT_CF!
+echo  [6] !TXT_OPT_ADG!
+echo  [7] !TXT_OPT_Q9!
+echo  [8] !TXT_OPT_CLEAN!
+echo  [9] !TXT_OPT_UPDATE!
+echo  [A] !TXT_OPT_REPORT!
+echo  [B] !TXT_OPT_EXIT!
 echo --------------------------------------------------------------------
 echo.
 
-choice /c 123456789 /n /m "!TXT_SELECT!"
-if errorlevel 9 goto OPT_EXIT
-if errorlevel 8 goto OPT_REPORT
-if errorlevel 7 goto OPT_UPDATE
-if errorlevel 6 goto OPT_CLEAN
-if errorlevel 5 goto OPT_Q9
-if errorlevel 4 goto OPT_ADG
-if errorlevel 3 goto OPT_CF
-if errorlevel 2 goto OPT_GOOG
-goto OPT_BEST
+choice /c 123456789AB /n /m "!TXT_SELECT!"
+if errorlevel 11 goto OPT_EXIT
+if errorlevel 10 goto OPT_REPORT
+if errorlevel 9 goto OPT_UPDATE
+if errorlevel 8 goto OPT_CLEAN
+if errorlevel 7 goto OPT_Q9
+if errorlevel 6 goto OPT_ADG
+if errorlevel 5 goto OPT_CF
+if errorlevel 4 goto OPT_GOOG
+if errorlevel 3 goto OPT_SAVED
+if errorlevel 2 goto OPT_ROBLOX
+goto OPT_SMART
 
-:OPT_BEST
+rem --- [1] Akilli Secici: profilleri gercekten test eder, en hizlisini kaydeder ---
+:OPT_SMART
 echo.
-echo !TXT_STARTING! !best_name!
-call :LAUNCH "!best_script!"
+if not exist "%BASE%akilli_secici.ps1" goto SMART_MISSING
+powershell -NoProfile -ExecutionPolicy Bypass -File "%BASE%akilli_secici.ps1"
+if errorlevel 1 goto PRESS_KEY
+call :LOAD_PROFILE
+if not defined SAVED_SCRIPT goto PRESS_KEY
+echo.
+choice /c !YN_KEYS! /m "!TXT_START_NOW! [!SAVED_NAME!]"
+if errorlevel 2 goto PRESS_KEY
+call :LAUNCH "!SAVED_SCRIPT!" "!SAVED_NAME!"
 goto MENU
 
+:SMART_MISSING
+echo !TXT_MISSING! akilli_secici.ps1
+goto PRESS_KEY
+
+rem --- [2] Roblox ile baslat: Roblox kapaninca GoodbyeDPI de kapanir ---
+:OPT_ROBLOX
+echo.
+if not exist "%BASE%roblox_ile_baslat.ps1" goto ROBLOX_MISSING
+powershell -NoProfile -ExecutionPolicy Bypass -File "%BASE%roblox_ile_baslat.ps1"
+call :LOAD_PROFILE
+goto PRESS_KEY
+
+:ROBLOX_MISSING
+echo !TXT_MISSING! roblox_ile_baslat.ps1
+goto PRESS_KEY
+
+rem --- [3] Son kullanilan profil ---
+:OPT_SAVED
+if not defined SAVED_SCRIPT goto SAVED_NONE
+call :LAUNCH "!SAVED_SCRIPT!" "!SAVED_NAME!"
+goto MENU
+
+:SAVED_NONE
+echo.
+echo !TXT_NO_SAVED!
+goto PRESS_KEY
+
+rem --- [4-7] Elle profil secimi ---
 :OPT_GOOG
-call :LAUNCH "roblox_dnsredir_alternative.cmd"
+call :LAUNCH "roblox_dnsredir_alternative.cmd" "Google DNS"
 goto MENU
 
 :OPT_CF
-call :LAUNCH "roblox_dnsredir_alternative2.cmd"
+call :LAUNCH "roblox_dnsredir_alternative2.cmd" "Cloudflare DNS"
 goto MENU
 
 :OPT_ADG
-call :LAUNCH "roblox_dnsredir_alternative_adguard.cmd"
+call :LAUNCH "roblox_dnsredir_alternative_adguard.cmd" "AdGuard DNS"
 goto MENU
 
 :OPT_Q9
-call :LAUNCH "roblox_dnsredir.cmd"
+call :LAUNCH "roblox_dnsredir.cmd" "Quad9 DNS"
 goto MENU
 
 :OPT_CLEAN
@@ -234,7 +264,7 @@ goto PRESS_KEY
 :UPD_NEW
 echo !TXT_UPD_NEW! v!UPD_LATEST!  -  !TXT_UPD_YOURS! v%LOCAL_VER%
 echo.
-choice /c !UPD_KEYS! /m "!TXT_UPD_OPEN!"
+choice /c !YN_KEYS! /m "!TXT_UPD_OPEN!"
 if not errorlevel 2 start "" "https://github.com/%REPO%/releases/latest"
 goto PRESS_KEY
 
@@ -285,9 +315,48 @@ for /f "usebackq tokens=1,2 delims=:" %%a in (`powershell -NoProfile -ExecutionP
 )
 exit /b
 
-rem %1 = calistirilacak .cmd dosyasi
+rem ayar.ini dosyasindan son kullanilan profili okur: SAVED_SCRIPT, SAVED_NAME
+rem Yonetici izniyle calistigi icin sadece bilinen 4 profil dosyasina izin verilir.
+:LOAD_PROFILE
+set "SAVED_SCRIPT="
+set "SAVED_NAME="
+if not exist "%BASE%ayar.ini" exit /b
+for /f "usebackq tokens=1,* delims==" %%a in ("%BASE%ayar.ini") do call :LOAD_LINE "%%a" "%%b"
+call :VALIDATE_PROFILE
+exit /b
+
+:LOAD_LINE
+if /i "%~1"=="profile" set "SAVED_SCRIPT=%~2"
+exit /b
+
+:VALIDATE_PROFILE
+if not defined SAVED_SCRIPT exit /b
+set "SAVED_NAME="
+if /i "!SAVED_SCRIPT!"=="roblox_dnsredir_alternative.cmd" set "SAVED_NAME=Google DNS"
+if /i "!SAVED_SCRIPT!"=="roblox_dnsredir_alternative2.cmd" set "SAVED_NAME=Cloudflare DNS"
+if /i "!SAVED_SCRIPT!"=="roblox_dnsredir_alternative_adguard.cmd" set "SAVED_NAME=AdGuard DNS"
+if /i "!SAVED_SCRIPT!"=="roblox_dnsredir.cmd" set "SAVED_NAME=Quad9 DNS"
+if not defined SAVED_NAME goto VALIDATE_BAD
+if not exist "%BASE%!SAVED_SCRIPT!" goto VALIDATE_BAD
+exit /b
+
+:VALIDATE_BAD
+set "SAVED_SCRIPT="
+set "SAVED_NAME="
+exit /b
+
+rem %1 = profil dosyasi, %2 = profil adi: ayar.ini dosyasina yazar
+:SAVE_PROFILE
+(
+echo profile=%~1
+echo name=%~2
+) > "%BASE%ayar.ini" 2>nul
+exit /b
+
+rem %1 = calistirilacak .cmd dosyasi, %2 = profil adi
 :LAUNCH
 if not exist "%BASE%%~1" goto LAUNCH_MISSING
+call :SAVE_PROFILE "%~1" "%~2"
 start "GoodbyeDPI" "%BASE%%~1"
 exit
 
