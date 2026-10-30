@@ -2,7 +2,7 @@ $ErrorActionPreference = 'SilentlyContinue'
 try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 } catch {}
 
 # ---- HER YENI SURUMDE SADECE BU SATIRI GUNCELLE ----
-$ToolVersion = '1.2.1'
+$ToolVersion = '1.2.2'
 # ----------------------------------------------------
 
 $OutFile = Join-Path $PSScriptRoot 'rapor.txt'
