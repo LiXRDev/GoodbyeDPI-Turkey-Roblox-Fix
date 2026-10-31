@@ -6,7 +6,7 @@ color 0A
 rem ====================================================================
 rem  HER YENI SURUMDE SADECE BU SATIRI GUNCELLE / UPDATE ONLY THIS LINE
 rem ====================================================================
-set "LOCAL_VER=1.2.2"
+set "LOCAL_VER=1.2.3"
 set "REPO=LiXRDev/GoodbyeDPI-Turkey-Roblox-Fix"
 rem ====================================================================
 
