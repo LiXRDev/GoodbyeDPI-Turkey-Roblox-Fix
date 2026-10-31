@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roblox Görseller Yüklenmiyor Çözümü | GoodbyeDPI Türkiye</title>
+<meta name="description" content="Roblox görselleri, avatarlar ve menüler yüklenmiyor mu? GoodbyeDPI Türkiye için ücretsiz, açık kaynak Roblox düzeltmesi. Akıllı Seçici internetinizde çalışan ayarı kendisi bulur.">
+<meta name="color-scheme" content="dark light">
+<link rel="canonical" href="https://lixrdev.github.io/GoodbyeDPI-Turkey-Roblox-Fix/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Roblox Görseller Yüklenmiyor Çözümü | GoodbyeDPI Türkiye">
+<meta property="og:description" content="GoodbyeDPI Türkiye için ücretsiz Roblox düzeltmesi. Çalışan ayarı kendisi bulur.">
+<meta property="og:url" content="https://lixrdev.github.io/GoodbyeDPI-Turkey-Roblox-Fix/">
+<meta property="og:image" content="https://repository-images.githubusercontent.com/1414650603/62627cca-e825-4d8c-930e-895b6f7f1b79">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Roblox görselleri ve avatarlar neden yüklenmiyor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Bazı internet sağlayıcılarının uyguladığı DPI (derin paket inceleme) sistemleri Roblox'un görsel sunucularına giden bağlantıları engelleyebiliyor. GoodbyeDPI bu engeli aşmak için paketleri düzenler."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Bu bir VPN mi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hayır. Trafiğiniz üçüncü bir sunucuya yönlendirilmez, yalnızca paketlerin DPI sistemlerine takılması engellenir."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Çalışmazsa ne yapmalıyım?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "1) Menüden 1 ile Akıllı Seçici'yi çalıştırın. 2) Antivirüsün ağ korumasını kontrol edin. 3) Menüden 8 ile Roblox önbelleğini temizleyin. 4) Olmazsa menüden A ile rapor alıp GitHub'daki Issues bölümüne yapıştırın."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Neden yönetici izni istiyor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GoodbyeDPI ağ paketlerini değiştirmek için WinDivert sürücüsünü kullanır ve bu yönetici izni gerektirir."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  :root {
+    --bg: #0e1116;
+    --surface: #161b22;
+    --line: #2a313c;
+    --text: #e6edf3;
+    --muted: #9aa7b4;
+    --accent: #4da3ff;
+    --accent-ink: #06121f;
+    --ok: #3fb950;
+    --warn: #d29922;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6f8fa;
+      --surface: #ffffff;
+      --line: #d0d7de;
+      --text: #1f2328;
+      --muted: #59636e;
+      --accent: #0b64d8;
+      --accent-ink: #ffffff;
+      --ok: #1a7f37;
+      --warn: #9a6700;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  a { color: var(--accent); }
+  a:focus-visible, summary:focus-visible, .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+  header.top { border-bottom: 1px solid var(--line); }
+  header.top .wrap { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; }
+  header.top strong { font-size: 15px; }
+  nav a { margin-right: 16px; text-decoration: none; color: var(--muted); font-size: 14px; }
+  nav a:hover { color: var(--text); }
+  .hero { padding: 64px 0 40px; }
+  .hero h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.15; margin: 0 0 16px; letter-spacing: -0.02em; }
+  .hero p.lead { font-size: 18px; color: var(--muted); max-width: 640px; margin: 0 0 28px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-block; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; border: 1px solid var(--line); color: var(--text); background: var(--surface); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .note { font-size: 14px; color: var(--muted); margin-top: 14px; }
+  section { padding: 36px 0; border-top: 1px solid var(--line); }
+  section h2 { font-size: 24px; margin: 0 0 18px; letter-spacing: -0.01em; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; }
+  .card h3 { margin: 0 0 6px; font-size: 17px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+  ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; }
+  ol.steps li { counter-increment: s; position: relative; padding: 0 0 18px 48px; }
+  ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-weight: 700; display: grid; place-items: center; }
+  ol.steps strong { display: block; }
+  .callout { border-left: 4px solid var(--warn); background: var(--surface); padding: 12px 16px; border-radius: 6px; color: var(--muted); font-size: 15px; }
+  details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 16px; margin-bottom: 10px; }
+  summary { cursor: pointer; font-weight: 600; padding: 14px 0; }
+  details p, details ol { margin: 0 0 14px; color: var(--muted); }
+  details ol { padding-left: 20px; }
+  code { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; font-size: 14px; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: 14px; }
+  footer p { margin: 0 0 8px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <strong>GoodbyeDPI Türkiye · Roblox Fix</strong>
+    <nav aria-label="Sayfa bölümleri">
+      <a href="#kurulum">Kurulum</a>
+      <a href="#sss">SSS</a>
+      <a href="#guvenlik">Güvenlik</a>
+      <a href="#english">English</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>Roblox görselleri, avatarlar ve menüler yüklenmiyor mu?</h1>
+    <p class="lead">GoodbyeDPI Türkiye için ücretsiz, açık kaynak Roblox düzeltmesi. İnternetinizde hangi ayarın gerçekten çalıştığını kendisi bulur.</p>
+    <div class="btns">
+      <a class="btn primary" href="https://github.com/LiXRDev/GoodbyeDPI-Turkey-Roblox-Fix/releases/latest">Son sürümü indir</a>
+      <a class="btn" href="https://github.com/LiXRDev/GoodbyeDPI-Turkey-Roblox-Fix">GitHub'da incele</a>
+    </div>
+    <p class="note">Windows 10 ve 11 önerilir. Her internet sağlayıcısında çalışacağı garanti edilemez, Akıllı Seçici bu yüzden var.</p>
+  </div>
+
+  <section id="ozellikler" aria-labelledby="h-ozellikler">
+    <h2 id="h-ozellikler">Ne yapar?</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Akıllı Seçici</h3>
+        <p>Dört profili sırayla çalıştırıp Roblox sunucularına gerçekten bağlanmayı dener, çalışanlar arasından en hızlısını seçer.</p>
+      </div>
+      <div class="card">
+        <h3>Roblox ile başlat</h3>
+        <p>GoodbyeDPI'ı açar, Roblox kapanınca kendiliğinden kapatır. Siyah pencereyle uğraşmazsınız.</p>
+      </div>
+      <div class="card">
+        <h3>VPN değil</h3>
+        <p>Trafiğiniz üçüncü bir sunucuya yönlendirilmez. Sadece paketlerin DPI sistemlerine takılması engellenir.</p>
+      </div>
+      <div class="card">
+        <h3>Sorun raporu</h3>
+        <p>Çalışmazsa tek tuşla rapor alırsınız. Her bilgi için onayınız istenir, rapor sadece bilgisayarınızda kalır.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="kurulum" aria-labelledby="h-kurulum">
+    <h2 id="h-kurulum">Kurulum: 4 adım</h2>
+    <ol class="steps">
+      <li><strong>Zip'i indirin</strong>GitHub'daki <a href="https://github.com/LiXRDev/GoodbyeDPI-Turkey-Roblox-Fix/releases/latest">Releases</a> sayfasından son sürümü indirin.</li>
+      <li><strong>Bir klasöre çıkarın</strong>Zip'in içinden doğrudan çalıştırmayın, dosyalar eksik açılır.</li>
+      <li><strong><code>DNSTEST.bat</code> dosyasına çift tıklayın</strong>Yönetici izni isteyecek, onaylayın. Dil seçip menüden <strong>1 (Akıllı Seçici)</strong> tuşuna basın, 2-3 dakika sürer.</li>
+      <li><strong>Roblox için menüden 2'yi kullanın</strong>"Roblox ile başlat" seçeneği GoodbyeDPI'ı açar, Roblox kapanınca kapatır.</li>
+    </ol>
+    <p class="callout">Yönetici izni şarttır: GoodbyeDPI ağ paketlerini değiştirmek için bir sürücü (WinDivert) kullanır ve bu yönetici izni olmadan çalışmaz.</p>
+  </section>
+
+  <section id="sss" aria-labelledby="h-sss">
+    <h2 id="h-sss">Sık sorulan sorular</h2>
+
+    <details>
+      <summary>Roblox görselleri ve avatarlar neden yüklenmiyor?</summary>
+      <p>Bazı internet sağlayıcılarının uyguladığı DPI (derin paket inceleme) sistemleri Roblox'un görsel sunucularına giden bağlantıları engelleyebiliyor. GoodbyeDPI bu engeli aşmak için paketleri düzenler.</p>
+    </details>
+
+    <details>
+      <summary>Bu bir VPN mi?</summary>
+      <p>Hayır. Trafiğiniz üçüncü bir sunucuya yönlendirilmez, yalnızca paketlerin DPI sistemlerine takılması engellenir.</p>
+    </details>
+
+    <details>
+      <summary>Çalışmazsa ne yapmalıyım?</summary>
+      <ol>
+        <li>Menüden <strong>1</strong> ile Akıllı Seçici'yi çalıştırın.</li>
+        <li>Antivirüsün ağ korumasını kontrol edin.</li>
+        <li>Menüden <strong>8</strong> ile Roblox önbelleğini temizleyin.</li>
+        <li>Olmazsa menüden <strong>A</strong> ile rapor alıp GitHub'daki <a href="https://github.com/LiXRDev/GoodbyeDPI-Turkey-Roblox-Fix/issues">Issues</a> bölümüne yapıştırın.</li>
+      </ol>
+    </details>
+
+    <details>
+      <summary>Antivirüs engelliyor mu?</summary>
+      <p>Kaspersky ve benzeri gelişmiş antivirüsler kendi ağ taramaları nedeniyle GoodbyeDPI'ın çalışmasına engel olabilir. Görseller hâlâ yüklenmiyorsa antivirüsün ağ koruması / SSL tarama özelliğini geçici olarak kapatmayı ya da Windows Defender'a geçmeyi deneyin.</p>
+    </details>
+
+    <details>
+      <summary>Neden yönetici izni istiyor?</summary>
+      <p>GoodbyeDPI ağ paketlerini değiştirmek için WinDivert sürücüsünü kullanır ve bu yönetici izni gerektirir.</p>
+    </details>
+
+    <details>
+      <summary>Verilerim bir yere gönderiliyor mu?</summary>
+      <p>Hayır. Araç kullanıcı verisi göndermez. Güncelleme kontrolü yalnızca GitHub'dan en son sürüm bilgisini okur, Akıllı Seçici yalnızca Roblox adreslerine bağlanmayı dener, sorun raporu ise yalnızca sizin bilgisayarınızda oluşur.</p>
+    </details>
+
+    <details>
+      <summary>Nasıl kaldırırım?</summary>
+      <p>Siyah GoodbyeDPI penceresini kapatmanız yeterli. Hizmet olarak kurduysanız <code>service_remove.cmd</code> dosyasını çalıştırın. Klasörü silmek her şeyi kaldırır.</p>
+    </details>
+  </section>
+
+  <section id="guvenlik" aria-labelledby="h-guvenlik">
+    <h2 id="h-guvenlik">Güvenlik ve şeffaflık</h2>
+    <p>Yönetici izniyle çalışan bir araç olduğu için indirmeden önce doğrulamanız doğru olur.</p>
+    <ul>
+      <li>Sürüm notlarındaki <strong>SHA256</strong> değerini zip'inkiyle karşılaştırın (PowerShell: <code>Get-FileHash dosya.zip</code>).</li>
+      <li>Tüm betikler (<code>.bat</code>, <code>.cmd</code>, <code>.ps1</code>) düz metindir, açıp okuyabilirsiniz.</li>
+      <li>Yalnızca bu deponun <a href="https://github.com/LiXRDev/GoodbyeDPI-Turkey-Roblox-Fix/releases">Releases</a> sayfasından indirin, başka kaynaklardaki kopyalara güvenmeyin.</li>
+    </ul>
+    <p class="callout">Bu yazılım yalnızca eğitim, araştırma ve erişim sorunlarını giderme amacıyla açık kaynak paylaşılmıştır. Kullanımından doğacak her türlü yasal ve teknik sorumluluk kullanıcıya aittir. Roblox veya GoodbyeDPI geliştiricileriyle resmi bir bağlantısı yoktur.</p>
+  </section>
+
+  <section id="english" lang="en" aria-labelledby="h-en">
+    <h2 id="h-en">English</h2>
+    <p><strong>Roblox images, avatars or menus not loading in Turkey?</strong> This package configures GoodbyeDPI Turkey for Roblox and finds the profile that actually works on your connection. It is not a VPN: your traffic is not routed through a third-party server.</p>
+    <ol>
+      <li>Download the zip from <a href="https://github.com/LiXRDev/GoodbyeDPI-Turkey-Roblox-Fix/releases/latest">Releases</a> and extract it to a folder.</li>
+      <li>Double-click <code>DNSTEST.bat</code> and accept the administrator prompt (required by GoodbyeDPI's WinDivert driver).</li>
+      <li>Choose a language, then press <strong>1</strong> (Smart Picker). It tests all four profiles against real Roblox servers and picks the fastest one that works.</li>
+      <li>From then on press <strong>2</strong> (Start with Roblox): GoodbyeDPI starts, and stops when Roblox closes.</li>
+    </ol>
+    <p>Note: the Smart Picker, "Start with Roblox" and report screens are currently in Turkish. Antivirus products such as Kaspersky can block GoodbyeDPI; try Windows Defender or disable network scanning temporarily. Windows 10/11 recommended.</p>
+    <p class="callout">Provided for education, research and troubleshooting access problems. You are responsible for how you use it. Not affiliated with Roblox or the GoodbyeDPI authors.</p>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Orijinal GoodbyeDPI: <a href="https://github.com/ValdikSS/GoodbyeDPI">ValdikSS/GoodbyeDPI</a> · Türkiye uyarlaması: <a href="https://github.com/cagritaskn/GoodbyeDPI-Turkey">cagritaskn/GoodbyeDPI-Turkey</a></p>
+    <p><a href="https://github.com/LiXRDev/GoodbyeDPI-Turkey-Roblox-Fix">Bu proje GitHub'da</a> · MIT lisansı (dahil edilen GoodbyeDPI bileşenleri kendi lisanslarına tabidir)</p>
+  </div>
+</footer>
+
+</body>
+</html>
