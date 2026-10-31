@@ -6,7 +6,7 @@ color 0A
 rem ====================================================================
 rem  HER YENI SURUMDE SADECE BU SATIRI GUNCELLE / UPDATE ONLY THIS LINE
 rem ====================================================================
-set "LOCAL_VER=1.2.3"
+set "LOCAL_VER=1.2.4"
 set "REPO=LiXRDev/GoodbyeDPI-Turkey-Roblox-Fix"
 rem ====================================================================
 
@@ -74,6 +74,14 @@ set "TXT_UPD_YOURS=Sizdeki:"
 set "TXT_UPD_OK=[v] Guncelsiniz. En son surum:"
 set "TXT_UPD_ERR=[i] Kontrol yapilamadi. Internet baglantinizi kontrol edin."
 set "TXT_UPD_OPEN=Indirme sayfasi acilsin mi?"
+set "TXT_CHK_TITLE=BASLANGIC KONTROLU: SORUN BULUNDU"
+set "TXT_CHK_ZIP=[X] Program zip dosyasinin ICINDEN calistiriliyor. Dosyalar eksik acilir ve calismaz."
+set "TXT_CHK_FATAL=[X] Eksik dosya:"
+set "TXT_CHK_FIX=Cozum: Zip dosyasina sag tiklayip 'Tumunu ayikla' deyin, cikan klasorden DNSTEST.bat dosyasini calistirin."
+set "TXT_CHK_EXIT=Cikmak icin bir tusa basin..."
+set "TXT_CHK_WARN=[i] Bazi dosyalar bulunamadi, ilgili ozellikler calismayabilir:"
+set "TXT_CHK_WARN2=Zip dosyasinin tamamini cikardiginizdan emin olun."
+set "TXT_CHK_CONT=Devam etmek icin bir tusa basin..."
 goto START_TEST
 
 :SET_EN
@@ -110,9 +118,20 @@ set "TXT_UPD_YOURS=Yours:"
 set "TXT_UPD_OK=[v] You are up to date. Latest version:"
 set "TXT_UPD_ERR=[i] Could not check for updates. Check your internet connection."
 set "TXT_UPD_OPEN=Open the download page?"
+set "TXT_CHK_TITLE=STARTUP CHECK: PROBLEM FOUND"
+set "TXT_CHK_ZIP=[X] The program is running from INSIDE the zip file. Files are extracted incompletely and it will not work."
+set "TXT_CHK_FATAL=[X] Missing file:"
+set "TXT_CHK_FIX=Fix: Right-click the zip file, choose 'Extract All', then run DNSTEST.bat from the extracted folder."
+set "TXT_CHK_EXIT=Press any key to exit..."
+set "TXT_CHK_WARN=[i] Some files were not found, related features may not work:"
+set "TXT_CHK_WARN2=Make sure you extracted the whole zip file."
+set "TXT_CHK_CONT=Press any key to continue..."
 goto START_TEST
 
 :START_TEST
+call :STARTUP_CHECK
+if "!CHECK_FATAL!"=="1" goto STARTUP_FAIL
+if defined MISSING_LIST call :STARTUP_WARN
 cls
 echo ====================================================================
 echo        !TXT_TITLE!
@@ -287,6 +306,22 @@ goto MENU
 :OPT_EXIT
 exit
 
+rem --- Baslangic kontrolu ciddi sorun buldu: aciklama goster ve kapat ---
+:STARTUP_FAIL
+cls
+echo ====================================================================
+echo        !TXT_CHK_TITLE!
+echo ====================================================================
+echo.
+if "!IN_ZIP!"=="1" echo  !TXT_CHK_ZIP!
+if defined FATAL_LIST echo  !TXT_CHK_FATAL!!FATAL_LIST!
+echo.
+echo  !TXT_CHK_FIX!
+echo.
+echo  !TXT_CHK_EXIT!
+pause >nul
+exit
+
 rem ====================================================================
 rem  ALT RUTINLER / SUBROUTINES
 rem ====================================================================
@@ -365,5 +400,50 @@ echo.
 echo !TXT_MISSING! %~1
 echo.
 echo !TXT_PRESS_KEY!
+pause >nul
+exit /b
+
+rem ====================================================================
+rem  BASLANGIC KONTROLU / STARTUP CHECK
+rem  CHECK_FATAL=1 ise program devam etmez. MISSING_LIST doluysa sadece uyari verilir.
+rem ====================================================================
+:STARTUP_CHECK
+set "CHECK_FATAL=0"
+set "IN_ZIP=0"
+set "FATAL_LIST="
+set "MISSING_LIST="
+rem Zip icinden mi? (Windows, 7-Zip ve WinRAR gecici klasorleri)
+for %%p in (".zip\" "\7zO" "\Rar$" "Temp1_") do (
+    set "_chk=!BASE:%%~p=!"
+    if not "!_chk!"=="!BASE!" set "IN_ZIP=1"
+)
+rem Mimari secimi profil dosyalariyla (roblox_dnsredir*.cmd) ayni olmali
+set "ARCH=x86"
+if /i "%PROCESSOR_ARCHITECTURE%"=="AMD64" set "ARCH=x86_64"
+if defined PROCESSOR_ARCHITEW6432 set "ARCH=x86_64"
+if not exist "%BASE%!ARCH!\goodbyedpi.exe" set "FATAL_LIST= !ARCH!\goodbyedpi.exe"
+set "PROFILES_FOUND=0"
+for %%f in (roblox_dnsredir.cmd roblox_dnsredir_alternative.cmd roblox_dnsredir_alternative2.cmd roblox_dnsredir_alternative_adguard.cmd) do (
+    if exist "%BASE%%%f" (
+        set /a PROFILES_FOUND+=1
+    ) else (
+        set "MISSING_LIST=!MISSING_LIST! %%f"
+    )
+)
+if !PROFILES_FOUND! EQU 0 set "FATAL_LIST=!FATAL_LIST! roblox_dnsredir*.cmd"
+for %%f in (akilli_secici.ps1 roblox_ile_baslat.ps1 sorun_raporu.ps1) do (
+    if not exist "%BASE%%%f" set "MISSING_LIST=!MISSING_LIST! %%f"
+)
+if "!IN_ZIP!"=="1" set "CHECK_FATAL=1"
+if defined FATAL_LIST set "CHECK_FATAL=1"
+exit /b
+
+:STARTUP_WARN
+cls
+echo.
+echo  !TXT_CHK_WARN!!MISSING_LIST!
+echo  !TXT_CHK_WARN2!
+echo.
+echo  !TXT_CHK_CONT!
 pause >nul
 exit /b
