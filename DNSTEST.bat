@@ -6,7 +6,7 @@ color 0A
 rem ====================================================================
 rem  HER YENI SURUMDE SADECE BU SATIRI GUNCELLE / UPDATE ONLY THIS LINE
 rem ====================================================================
-set "LOCAL_VER=1.2.4"
+set "LOCAL_VER=1.3"
 set "REPO=LiXRDev/GoodbyeDPI-Turkey-Roblox-Fix"
 rem ====================================================================
 
@@ -23,7 +23,7 @@ exit /b
 
 :ADMIN_OK
 cd /d "%~dp0"
-mode con: cols=100 lines=40 >nul 2>&1
+mode con: cols=100 lines=48 >nul 2>&1
 set "BASE=%~dp0"
 setlocal enabledelayedexpansion
 
@@ -47,7 +47,7 @@ set "TXT_TESTING=Baglanti ve guncelleme kontrol ediliyor, lutfen bekleyin..."
 set "TXT_RESULTS=PING TEST SONUCLARI VE MENU - v%LOCAL_VER%"
 set "TXT_UNREACH=Erisilemedi"
 set "TXT_NO_DNS=[X] Hicbir DNS sunucusuna erisilemedi. Internetinizi kontrol edin."
-set "TXT_OPT_SMART=Akilli Secici: en hizli calisan profili bul (2-3 dk)"
+set "TXT_OPT_SMART=Akilli Secici: en hizli calisan profili bul (2-5 dk)"
 set "TXT_OPT_ROBLOX=Roblox ile baslat (Roblox kapaninca otomatik kapanir)"
 set "TXT_OPT_SAVED=Son kullanilan profili baslat"
 set "TXT_NONE_YET=henuz yok"
@@ -60,6 +60,9 @@ set "TXT_OPT_UPDATE=Guncellemeleri Kontrol Et"
 set "TXT_OPT_REPORT=Sorun Raporu Olustur (sorun_raporu.ps1)"
 set "TXT_OPT_EXIT=Testi kapat"
 set "TXT_SELECT=Seciminizi yapin (1-9, A, B): "
+set "TXT_SEC_AUTO=OTOMATIK"
+set "TXT_SEC_MANUAL=ELLE PROFIL SECIMI"
+set "TXT_SEC_TOOLS=ARACLAR"
 set "TXT_START_NOW=Secilen profil simdi baslatilsin mi?"
 set "TXT_NO_SAVED=[i] Kayitli profil yok. Once Akilli Secici'yi (1) calistirin."
 set "TXT_CLEANING=Roblox gecici dosyalari temizleniyor..."
@@ -91,7 +94,7 @@ set "TXT_TESTING=Checking connection and updates, please wait..."
 set "TXT_RESULTS=PING TEST RESULTS AND MENU - v%LOCAL_VER%"
 set "TXT_UNREACH=Unreachable"
 set "TXT_NO_DNS=[X] No DNS server is reachable. Check your internet connection."
-set "TXT_OPT_SMART=Smart Picker: find the fastest working profile (2-3 min, Turkish)"
+set "TXT_OPT_SMART=Smart Picker: find the fastest working profile (2-5 min, Turkish)"
 set "TXT_OPT_ROBLOX=Start with Roblox (stops when Roblox closes, Turkish)"
 set "TXT_OPT_SAVED=Launch last used profile"
 set "TXT_NONE_YET=none yet"
@@ -104,6 +107,9 @@ set "TXT_OPT_UPDATE=Check for Updates"
 set "TXT_OPT_REPORT=Create Problem Report (sorun_raporu.ps1, Turkish)"
 set "TXT_OPT_EXIT=Exit"
 set "TXT_SELECT=Make your choice (1-9, A, B): "
+set "TXT_SEC_AUTO=AUTOMATIC"
+set "TXT_SEC_MANUAL=MANUAL PROFILE"
+set "TXT_SEC_TOOLS=TOOLS"
 set "TXT_START_NOW=Launch the selected profile now?"
 set "TXT_NO_SAVED=[i] No saved profile yet. Run the Smart Picker (1) first."
 set "TXT_CLEANING=Clearing Roblox temporary files..."
@@ -164,18 +170,36 @@ echo.
 if "!UPD_STATE!"=="NEW" echo  !TXT_UPD_NEW! v!UPD_LATEST!  -  !TXT_UPD_YOURS! v%LOCAL_VER%
 if "!NO_DNS!"=="1" echo  !TXT_NO_DNS!
 echo --------------------------------------------------------------------
-echo  [1] !TXT_OPT_SMART!
-echo  [2] !TXT_OPT_ROBLOX!
-if defined SAVED_NAME echo  [3] !TXT_OPT_SAVED! : !SAVED_NAME!
-if not defined SAVED_NAME echo  [3] !TXT_OPT_SAVED! : !TXT_NONE_YET!
-echo  [4] !TXT_OPT_GOOG!
-echo  [5] !TXT_OPT_CF!
-echo  [6] !TXT_OPT_ADG!
-echo  [7] !TXT_OPT_Q9!
-echo  [8] !TXT_OPT_CLEAN!
-echo  [9] !TXT_OPT_UPDATE!
-echo  [A] !TXT_OPT_REPORT!
-echo  [B] !TXT_OPT_EXIT!
+echo.
+echo   -- !TXT_SEC_AUTO! --
+echo.
+echo   [1] !TXT_OPT_SMART!
+echo.
+echo   [2] !TXT_OPT_ROBLOX!
+echo.
+if defined SAVED_NAME echo   [3] !TXT_OPT_SAVED! : !SAVED_NAME!
+if not defined SAVED_NAME echo   [3] !TXT_OPT_SAVED! : !TXT_NONE_YET!
+echo.
+echo   -- !TXT_SEC_MANUAL! --
+echo.
+echo   [4] !TXT_OPT_GOOG!
+echo.
+echo   [5] !TXT_OPT_CF!
+echo.
+echo   [6] !TXT_OPT_ADG!
+echo.
+echo   [7] !TXT_OPT_Q9!
+echo.
+echo   -- !TXT_SEC_TOOLS! --
+echo.
+echo   [8] !TXT_OPT_CLEAN!
+echo.
+echo   [9] !TXT_OPT_UPDATE!
+echo.
+echo   [A] !TXT_OPT_REPORT!
+echo.
+echo   [B] !TXT_OPT_EXIT!
+echo.
 echo --------------------------------------------------------------------
 echo.
 
@@ -304,7 +328,7 @@ pause >nul
 goto MENU
 
 :OPT_EXIT
-exit
+exit 0
 
 rem --- Baslangic kontrolu ciddi sorun buldu: aciklama goster ve kapat ---
 :STARTUP_FAIL
@@ -320,7 +344,7 @@ echo  !TXT_CHK_FIX!
 echo.
 echo  !TXT_CHK_EXIT!
 pause >nul
-exit
+exit 0
 
 rem ====================================================================
 rem  ALT RUTINLER / SUBROUTINES
@@ -371,6 +395,10 @@ if /i "!SAVED_SCRIPT!"=="roblox_dnsredir_alternative.cmd" set "SAVED_NAME=Google
 if /i "!SAVED_SCRIPT!"=="roblox_dnsredir_alternative2.cmd" set "SAVED_NAME=Cloudflare DNS"
 if /i "!SAVED_SCRIPT!"=="roblox_dnsredir_alternative_adguard.cmd" set "SAVED_NAME=AdGuard DNS"
 if /i "!SAVED_SCRIPT!"=="roblox_dnsredir.cmd" set "SAVED_NAME=Quad9 DNS"
+if /i "!SAVED_SCRIPT!"=="roblox_mod_a.cmd" set "SAVED_NAME=Mod A"
+if /i "!SAVED_SCRIPT!"=="roblox_mod_b.cmd" set "SAVED_NAME=Mod B"
+if /i "!SAVED_SCRIPT!"=="roblox_mod_c.cmd" set "SAVED_NAME=Mod C"
+if /i "!SAVED_SCRIPT!"=="roblox_mod_d.cmd" set "SAVED_NAME=Mod D"
 if not defined SAVED_NAME goto VALIDATE_BAD
 if not exist "%BASE%!SAVED_SCRIPT!" goto VALIDATE_BAD
 exit /b
@@ -392,8 +420,8 @@ rem %1 = calistirilacak .cmd dosyasi, %2 = profil adi
 :LAUNCH
 if not exist "%BASE%%~1" goto LAUNCH_MISSING
 call :SAVE_PROFILE "%~1" "%~2"
-start "GoodbyeDPI" "%BASE%%~1"
-exit
+start "GoodbyeDPI" cmd /c ""%BASE%%~1""
+exit 0
 
 :LAUNCH_MISSING
 echo.
